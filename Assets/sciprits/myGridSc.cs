@@ -25,16 +25,14 @@ public class myGridSc : MonoBehaviour {
             myGrid[x, y] = null;
         }
     }
+
     public static void decreseaRow(int y)
     {
-       
         for (int x = 0; x < with; ++x)
         {
             if (myGrid[x, y] != null)
             {
-                Debug.Log("sıra indirme çalıştı");
-                myGrid[x, y - 1] = myGrid[x, y];
-               
+                myGrid[x, y - 1] = myGrid[x, y]; 
                 myGrid[x, y].position +=new Vector3(0, -1, 0);
                 myGrid[x, y] = null;
             }
