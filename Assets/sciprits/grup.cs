@@ -2,6 +2,7 @@
 
 public class grup : MonoBehaviour {
     float lastFall = 0;
+    static float gameSpeed =1.0f;
 
 	void Start () {
         if (!İsValidGridPos())
@@ -10,6 +11,21 @@ public class grup : MonoBehaviour {
             Destroy(gameObject);
         }
 	}
+
+     void speedUp()
+    {
+        for (int y = 0; y < myGridSc.heigth; ++y)
+        {
+            if (myGridSc.isRowFull(y))
+            {
+                if (gameSpeed > 0.1f)
+                {
+                    gameSpeed = gameSpeed - 0.05f;
+                }
+                break;
+            }
+        }
+    }
 	
 	void Update () {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -52,7 +68,7 @@ public class grup : MonoBehaviour {
             }
         }
 
-        else if (Input.GetKeyDown(KeyCode.DownArrow)||Time.time-lastFall>=1)
+        else if (Input.GetKeyDown(KeyCode.DownArrow)||Time.time-lastFall>=gameSpeed)
         {
             transform.position += new Vector3(0, -1, 0);
 
@@ -64,10 +80,12 @@ public class grup : MonoBehaviour {
             {
                 transform.position += new Vector3(0, 1, 0);
 
+                speedUp();
+
                 myGridSc.deleteFullRows();
 
                 FindObjectOfType<spawner>().spawnNext();
-                enabled = false;
+                enabled = false;       
             }
 
             lastFall = Time.time;
@@ -92,7 +110,6 @@ public class grup : MonoBehaviour {
 
   public void updateGrid()
     {
-        Debug.Log("grid update fonksiyonu çalıştı");
         for (int y = 0; y < myGridSc.heigth; ++y)
             for (int x = 0; x < myGridSc.with; ++x)
                 if (myGridSc.myGrid[x, y] != null)
