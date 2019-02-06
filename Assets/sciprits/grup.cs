@@ -57,7 +57,9 @@ public class grup : MonoBehaviour {
 
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            if (transform.gameObject.name!="Square(Clone)")
             transform.Rotate(0, 0, 90);
+
             if (İsValidGridPos())
             {
                 updateGrid();
